@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
- <h1>Hello React Front-End</h1>
+ <h1>Appointment with a Doctor</h1>
 </div>
 
 <!-- TABLE OF CONTENTS -->
@@ -28,9 +28,10 @@
 - [📝 License](#license)
 
 <!-- PROJECT DESCRIPTION -->
-## 🚀[Hello Rails Back-End PR Link](https://github.com/AbdusSattar-70/hello-rails-back-end/pull/1)
+## 🚀[Back-End Repo](https://github.com/AbdusSattar-70/Booking_Doctor_API_V1)
+## 🚀[API](https://booking-doctor-api.onrender.com/users)
 
-## 📖 Hello React Front-End<a name="about-project"></a>
+## 📖 Appointment with a Doctor<a name="about-project"></a>
 
 <h3>
 The "hello-react-front-end" app enriches user experience by utilizing data from the Hello Rails back-end to display randomly generated greetings on its user interface (UI). When users interact with the front-end, the app communicates with the back-end to request a random greeting from the stored collection. The back-end processes the request, generates a random greeting, and sends it back to the front-end. Subsequently, the front-end dynamically updates the UI to showcase the newly fetched greeting, providing users with a fresh and engaging experience every time. This seamless integration of front-end and back-end components demonstrates the synergy between the two, exemplifying the power of full-stack development. By incorporating data flow from the back-end, the "hello-react-front-end" app offers a personalized and interactive encounter, making user interactions more enjoyable and memorable.</h3>
@@ -74,6 +75,8 @@ The "hello-react-front-end" app enriches user experience by utilizing data from 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
+## 💻 Live Demo <a name="getting-started"></a>
+- [Appointment With a Doctor](https://dapper-fox-cdc2db.netlify.app/doctors)
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
