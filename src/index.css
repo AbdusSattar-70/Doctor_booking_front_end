@@ -17,11 +17,11 @@
 
 .carousel-content {
   height: 100vh;
-    display: flex;
-    transition: transform 0.3s ease-in-out;
-    width: -moz-fit-content;
-    width: fit-content;
-    margin: 0 auto;
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+  width: -moz-fit-content;
+  width: fit-content;
+  margin: 0 auto;
 }
 
 .carousel-btn {
@@ -51,9 +51,9 @@
 
 .carousel-content div {
   display: flex;
-    align-items: center;
-    padding: 0 5px;
-    flex: 0 0 auto;
-    flex-direction: column;
-    justify-content: center;
+  align-items: center;
+  padding: 0 5px;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: center;
 }
