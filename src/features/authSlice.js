@@ -4,7 +4,8 @@ import axios from 'axios';
 const initialState = {
   isAuthenticated: false,
   authToken: sessionStorage.getItem('authToken') || null,
-  role: sessionStorage.getItem('role') || null,
+  userName: sessionStorage.getItem('userName') || null,
+  userRole: sessionStorage.getItem('userRole') || null,
   error: null,
 };
 
@@ -29,12 +30,7 @@ export const signUp = createAsyncThunk('auth/signUp', async (userData) => {
       },
     });
 
-    const authToken = response.headers.authorization;
-    sessionStorage.setItem('authToken', authToken);
-    const { role } = response.data;
-    sessionStorage.setItem('authToken', authToken);
-    sessionStorage.setItem('role', role);
-    return authToken;
+    return response.data;
   } catch (error) {
     throw new Error(error.message);
   }
@@ -45,14 +41,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     signInSuccess(state, action) {
-      console.log('signInSuccess - State:', state);
-      console.log('signInSuccess - Action:', action);
       state.isAuthenticated = true;
-      state.authToken = action.payload;
-      state.role = action.payload;
+      state.authToken = action.payload.authToken;
+      state.userName = action.payload.userName;
+      state.userRole = action.payload.userRole;
       state.error = null;
-      sessionStorage.setItem('authToken', action.payload);
-      sessionStorage.setItem('role', action.payload.role);
+      sessionStorage.setItem('authToken', action.payload.authToken);
+      sessionStorage.setItem('userName', action.payload.userName);
+      sessionStorage.setItem('userRole', action.payload.userRole);
     },
     signInError(state, action) {
       state.isAuthenticated = false;
@@ -62,10 +58,12 @@ const authSlice = createSlice({
     signOut(state) {
       state.isAuthenticated = false;
       state.authToken = null;
-      state.role = null;
+      state.userName = null;
+      state.userRole = null;
       state.error = null;
       sessionStorage.removeItem('authToken');
-      sessionStorage.removeItem('role');
+      sessionStorage.removeItem('userName');
+      sessionStorage.removeItem('userRole');
     },
   },
   extraReducers: (builder) => {
@@ -94,10 +92,13 @@ export const signIn = (email, password) => async (dispatch) => {
       },
     });
     const authToken = response.headers.authorization;
-    const { role } = response.data.status.data;
+    const userName = response.data.status.data.name;
+    const userRole = response.data.status.data.role;
+
     sessionStorage.setItem('authToken', authToken);
-    sessionStorage.setItem('role', role);
-    dispatch(signInSuccess(authToken, role));
+    sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem('userRole', userRole);
+    dispatch(signInSuccess({ authToken, userRole, userName }));
   } catch (error) {
     dispatch(signInError(error.message));
   }

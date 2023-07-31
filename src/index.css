@@ -57,3 +57,13 @@
   flex-direction: column;
   justify-content: center;
 }
+
+/* custom style for the "AddDoctor and delete doctor" button */
+.add_doctor_btn {
+  text-align: left !important;
+}
+
+.add_doctor_btn:hover,
+.add_doctor_btn:disabled {
+  background-color: #fff !important;
+}

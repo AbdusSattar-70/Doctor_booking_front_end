@@ -18,7 +18,7 @@ function HomePage() {
         <div className="col-6 m-0 p-0 d-flex justify-content-center align-items-center">
           <HomeDoctors />
         </div>
-        <div className="col-6 m-0 p-0 d-flex flex-column justify-content-center align-items-center" style={{ boxShadow: '5px 3px 10px rgba(0, 0, 0, 0.1)' }}>
+        <div className="col-6 m-0 p-0 d-flex flex-column justify-content-center align-items-center loginForm">
           <SignInForm />
           <p>Need to Create a new Account?</p>
           <Button variant="primary" onClick={handleOpenSignUpModal}>
