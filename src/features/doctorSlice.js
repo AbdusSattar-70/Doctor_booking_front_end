@@ -11,7 +11,31 @@ const initialState = {
 // Async Thunk for adding a doctor
 export const addDoctor = createAsyncThunk('doctors/addDoctor', async (doctorData) => {
   try {
-    const response = await axios.post('https://booking-doctor-api.onrender.com/users', doctorData);
+    const response = await axios.post('http://localhost:3000/users', {
+      user: {
+        name: doctorData.name,
+        age: doctorData.age,
+        email: doctorData.email,
+        photo: doctorData.photo,
+        role: 'doctor',
+        password: doctorData.password,
+        password_confirmation: doctorData.password_confirmation,
+        qualification: doctorData.qualification,
+        description: doctorData.description,
+        experiences: doctorData.experiences,
+        available_from: doctorData.available_from,
+        available_to: doctorData.available_to,
+        consultation_fee: doctorData.consultation_fee,
+        rating: doctorData.rating,
+        specialization: doctorData.specialization,
+        address: {
+          street: doctorData.address.street,
+          city: doctorData.address.city,
+          state: doctorData.address.state,
+          zip_code: doctorData.address.zip_code,
+        },
+      },
+    });
     return response.data;
   } catch (error) {
     throw new Error(error.message);
@@ -21,7 +45,7 @@ export const addDoctor = createAsyncThunk('doctors/addDoctor', async (doctorData
 // Async Thunk for fetching doctors
 export const fetchDoctors = createAsyncThunk('doctors/fetchDoctors', async () => {
   try {
-    const response = await axios.get('https://booking-doctor-api.onrender.com/users?role=doctor', {
+    const response = await axios.get('http://localhost:3000/users?role=doctor', {
       headers: {
         Authorization: sessionStorage.getItem('authToken'),
       },
