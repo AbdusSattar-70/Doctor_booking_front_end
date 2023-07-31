@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useLocation } from 'react-router-dom';
 import { Nav, NavDropdown, Button } from 'react-bootstrap';
 import {
@@ -10,7 +10,8 @@ import AddDoctor from '../doctorInfo/AddDoctor';
 
 function NavBar() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
-  // const { userRole } = useSelector((state) => state.auth);
+  const { userRole } = useSelector((state) => state.auth);
+  const isAdmin = () => userRole === 'admin';
   const handleCloseSignUpModal = () => {
     setShowSignUpModal(false);
   };
@@ -26,7 +27,6 @@ function NavBar() {
   };
 
   const isActiveLink = (path) => location.pathname === path;
-  // const isAdmin = userRole === 'admin';
 
   return (
     <>
@@ -41,20 +41,31 @@ function NavBar() {
         <div className="d-flex flex-column gap-3 p-3">
           <Button
             onClick={handleOpenSignUpModal}
+            disabled={!isAdmin()}
+            className={` add_doctor_btn nav-link ${isActiveLink('/add_doctor') ? 'active' : ''}`}
           >
-            AddDoctor
+            Add Doctor
           </Button>
-          <NavLink to="/delete_doctor" activeClassName="active" isActive={() => isActiveLink('/delete_doctor')}>
-            Delete Doctor
-          </NavLink>
+          {isAdmin() ? (
+            <NavLink to="/delete_doctor" activeClassName="active" isActive={() => isActiveLink('/delete_doctor')}>
+              Delete Doctor
+            </NavLink>
+          ) : (
+            <Button
+              className={` add_doctor_btn nav-link ${isActiveLink('/add_doctor') ? 'active' : ''}`}
+              disabled={!isAdmin()}
+            >
+              Delete Doctor
+            </Button>
+          )}
           <NavLink to="/doctors" activeClassName="active" isActive={() => isActiveLink('/doctors')}>
             Doctors
           </NavLink>
           <NavLink to="/patients" activeClassName="active" isActive={() => isActiveLink('/patients')}>
             Patients
           </NavLink>
-          <NavLink to="/appointments" activeClassName="active" isActive={() => isActiveLink('/appointments')}>
-            Appointments
+          <NavLink to="/appointment" activeClassName="active" isActive={() => isActiveLink('/appointment')}>
+            Appointment
           </NavLink>
           <NavLink to="/my_appointments" activeClassName="active" isActive={() => isActiveLink('/my_appointments')}>
             My Appointments

@@ -3,9 +3,9 @@ import axios from 'axios';
 
 const initialState = {
   isAuthenticated: false,
-  authToken: null,
-  userName: null,
-  userRole: null,
+  authToken: sessionStorage.getItem('authToken') || null,
+  userName: sessionStorage.getItem('userName') || null,
+  userRole: sessionStorage.getItem('userRole') || null,
   error: null,
 };
 
@@ -36,39 +36,24 @@ export const signUp = createAsyncThunk('auth/signUp', async (userData) => {
   }
 });
 
-export const signIn = createAsyncThunk('auth/signIn', async ({ email, password }) => {
-  try {
-    const response = await axios.post('http://localhost:3000/users/sign_in', {
-      user: { email, password },
-    });
-    const authToken = response.headers.authorization;
-    const { name: userName, role: userRole } = response.data.status.data;
-    return { authToken, userName, userRole };
-  } catch (error) {
-    throw new Error(error.message);
-  }
-});
-
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     signInSuccess(state, action) {
-      const { authToken, userName, userRole } = action.payload;
-      return {
-        ...state,
-        isAuthenticated: true,
-        authToken,
-        userName,
-        userRole,
-        error: null,
-      };
+      state.isAuthenticated = true;
+      state.authToken = action.payload.authToken;
+      state.userName = action.payload.userName;
+      state.userRole = action.payload.userRole;
+      state.error = null;
+      sessionStorage.setItem('authToken', action.payload.authToken);
+      sessionStorage.setItem('userName', action.payload.userName);
+      sessionStorage.setItem('userRole', action.payload.userRole);
     },
     signInError(state, action) {
-      const { payload } = action;
       state.isAuthenticated = false;
       state.authToken = null;
-      state.error = payload;
+      state.error = action.payload;
     },
     signOut(state) {
       state.isAuthenticated = false;
@@ -76,6 +61,9 @@ const authSlice = createSlice({
       state.userName = null;
       state.userRole = null;
       state.error = null;
+      sessionStorage.removeItem('authToken');
+      sessionStorage.removeItem('userName');
+      sessionStorage.removeItem('userRole');
     },
   },
   extraReducers: (builder) => {
@@ -89,22 +77,31 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.authToken = null;
         state.error = action.error.message;
-      })
-      .addCase(signIn.fulfilled, (state, action) => {
-        const { authToken, userName, userRole } = action.payload;
-        state.isAuthenticated = true;
-        state.authToken = authToken;
-        state.userName = userName;
-        state.userRole = userRole;
-        state.error = null;
-      })
-      .addCase(signIn.rejected, (state, action) => {
-        state.isAuthenticated = false;
-        state.authToken = null;
-        state.error = action.error.message;
       });
   },
 });
 
 export const { signInSuccess, signInError, signOut } = authSlice.actions;
+
+export const signIn = (email, password) => async (dispatch) => {
+  try {
+    const response = await axios.post('http://localhost:3000/users/sign_in', {
+      user: {
+        email,
+        password,
+      },
+    });
+    const authToken = response.headers.authorization;
+    const userName = response.data.status.data.name;
+    const userRole = response.data.status.data.role;
+
+    sessionStorage.setItem('authToken', authToken);
+    sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem('userRole', userRole);
+    dispatch(signInSuccess({ authToken, userRole, userName }));
+  } catch (error) {
+    dispatch(signInError(error.message));
+  }
+};
+
 export default authSlice.reducer;
