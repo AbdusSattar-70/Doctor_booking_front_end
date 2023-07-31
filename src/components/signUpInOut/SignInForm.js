@@ -1,9 +1,12 @@
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Form, Button } from 'react-bootstrap';
 import { signIn } from '../../features/authSlice';
 
 function SignInForm() {
   const dispatch = useDispatch();
-  const { error } = useSelector((state) => state.auth);
+  const { error, isAuthenticated } = useSelector((state) => state.auth);
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,13 +15,37 @@ function SignInForm() {
     dispatch(signIn(email, password));
   };
 
+  useEffect(() => {
+    setShowErrorMessage(!!error);
+    if (isAuthenticated) {
+      window.location.href = '/doctors';
+    }
+  }, [error, isAuthenticated]);
+
   return (
-    <form onSubmit={handleSubmit}>
-      <input type="email" name="email" placeholder="Email" />
-      <input type="password" name="password" placeholder="Password" />
-      <button type="submit">Sign In</button>
-      {error && <div>{error}</div>}
-    </form>
+    <div>
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="name">
+          <Form.Control type="text" name="name" placeholder="Name" />
+        </Form.Group>
+        <Form.Group controlId="email">
+          <Form.Control type="email" name="email" placeholder="Email" />
+        </Form.Group>
+        <Form.Group controlId="password">
+          <Form.Control type="password" name="password" placeholder="Password" />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Sign In
+        </Button>
+        {showErrorMessage && (
+        <>
+          <p> Opps! something went wrong.</p>
+          {' '}
+          <p>Recheck your password and email</p>
+        </>
+        )}
+      </Form>
+    </div>
   );
 }
 

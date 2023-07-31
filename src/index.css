@@ -1,34 +1,59 @@
-
-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80%;
-  margin: 0 auto;
+.doctor-photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
-input,
-textarea {
-  margin-bottom: 10px;
-  padding: 8px;
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.custom_nav a {
+  text-decoration: none;
+  color: black;
 }
 
-textarea {
-  resize: vertical;
+.active {
+  background-color: dodgerblue;
+  color: white !important;
 }
 
-button {
-  padding: 10px 15px;
-  background-color: #007bff;
-  color: #fff;
+.carousel-content {
+  height: 100vh;
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+    width: -moz-fit-content;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
   border: none;
-  border-radius: 4px;
+  color: #fff;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
-button:hover {
-  background-color: #0056b3;
+.carousel-btn.prev {
+  left: 0;
+}
+
+.carousel-btn.next {
+  right: 0;
+}
+
+.carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-content div {
+  display: flex;
+    align-items: center;
+    padding: 0 5px;
+    flex: 0 0 auto;
+    flex-direction: column;
+    justify-content: center;
 }
