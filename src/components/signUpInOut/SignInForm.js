@@ -10,6 +10,7 @@ function SignInForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     dispatch(signIn(email, password));
@@ -39,9 +40,9 @@ function SignInForm() {
         </Button>
         {showErrorMessage && (
         <>
-          <p> Opps! something went wrong.</p>
+          <p> Opps! Something Went Wrong.</p>
           {' '}
-          <p>Recheck your password and email</p>
+          <p>Recheck Your Name,Email Or Password</p>
         </>
         )}
       </Form>
