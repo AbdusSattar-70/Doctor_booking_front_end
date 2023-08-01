@@ -11,7 +11,7 @@ const initialState = {
 // Async Thunk for adding a doctor
 export const addDoctor = createAsyncThunk('doctors/addDoctor', async (doctorData) => {
   try {
-    const response = await axios.post('https://booking-doctor-api.onrender.com/users', {
+    const response = await axios.post('http://localhost:3000/users', {
       user: {
         name: doctorData.name,
         age: doctorData.age,
@@ -45,7 +45,7 @@ export const addDoctor = createAsyncThunk('doctors/addDoctor', async (doctorData
 // Async Thunk for fetching doctors
 export const fetchDoctors = createAsyncThunk('doctors/fetchDoctors', async () => {
   try {
-    const response = await axios.get('https://booking-doctor-api.onrender.com/users?role=doctor', {
+    const response = await axios.get('http://localhost:3000/users?role=doctor', {
       headers: {
         Authorization: sessionStorage.getItem('authToken'),
       },

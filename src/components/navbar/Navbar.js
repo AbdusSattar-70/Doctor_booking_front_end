@@ -12,6 +12,7 @@ function NavBar() {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { userRole } = useSelector((state) => state.auth);
   const isAdmin = () => userRole === 'admin';
+  const isSuperAdmin = () => userRole === 'super_admin';
   const handleCloseSignUpModal = () => {
     setShowSignUpModal(false);
   };
@@ -61,24 +62,30 @@ function NavBar() {
           <NavLink to="/doctors" activeClassName="active" isActive={() => isActiveLink('/doctors')}>
             Doctors
           </NavLink>
-          <NavLink to="/patients" activeClassName="active" isActive={() => isActiveLink('/patients')}>
-            Patients
-          </NavLink>
           <NavLink to="/appointment" activeClassName="active" isActive={() => isActiveLink('/appointment')}>
             Appointment
           </NavLink>
           <NavLink to="/my_appointments" activeClassName="active" isActive={() => isActiveLink('/my_appointments')}>
             My Appointments
           </NavLink>
-          <NavDropdown title="Others" id="nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something else here</NavDropdown.Item>
-            <NavDropdown.Divider />
-          </NavDropdown>
           <NavDropdown.Item as="button" onClick={handleSignOut}>
             Sign Out
           </NavDropdown.Item>
+          { isSuperAdmin() ? (
+            <NavDropdown title="For Super Admin" id="nav-dropdown">
+              <NavDropdown.Item href="/user_list">User Lists</NavDropdown.Item>
+              <NavDropdown.Item href="/appointment_list">Appointments Lists</NavDropdown.Item>
+              <NavDropdown.Item href="/patients">Patient Lists</NavDropdown.Item>
+              <NavDropdown.Divider />
+            </NavDropdown>
+          ) : (
+            <Button
+              className={` add_doctor_btn nav-link ${isActiveLink('/add_doctor') ? 'active' : ''}`}
+              disabled={!isAdmin()}
+            >
+              For Super Admin
+            </Button>
+          )}
         </div>
         <div className="d-flex align-items-center justify-content-between p-3 social_media">
           <Nav.Link href="https://www.facebook.com/your_facebook_profile_url" target="_blank">
