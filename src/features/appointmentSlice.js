@@ -10,16 +10,21 @@ const initialState = {
   authToken: sessionStorage.getItem('authToken') || null,
 };
 
-export const addAppointment = createAsyncThunk('appointments/addAppointment', async (formData) => {
-  try {
-    const response = await axios.post('http://localhost:3000/appointments', {
-      appointment: formData,
-    });
-    return response.data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-});
+export const addAppointment = createAsyncThunk(
+  'appointments/addAppointment',
+  async (formData) => {
+    try {
+      const response = await axios.post('http://localhost:3000/appointments', formData, {
+        headers: {
+          Authorization: sessionStorage.getItem('authToken'),
+        },
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+);
 
 export const fetchAppointments = createAsyncThunk('appointments/fetchAppointments', async () => {
   try {
