@@ -11,7 +11,6 @@ const Appointment = () => {
   const dispatch = useDispatch();
   const { userName, userID } = useSelector((state) => state.auth);
   const doctors = useSelector((state) => state.doctors.doctors);
-  const { error, status } = useSelector((state) => state.appointments);
   useEffect(() => {
     dispatch(fetchDoctors());
   }, [dispatch]);
@@ -34,19 +33,12 @@ const Appointment = () => {
   };
 
   const [formData, setFormData] = useState({ ...initialFormData });
-  const [errorMessage, setErrorMessage] = useState('');
   const handleSubmit = (event) => {
     event.preventDefault();
     dispatch(addAppointment(formData));
     setFormData({ ...initialFormData });
+    window.location.href = '/my_appointments';
   };
-
-  useEffect(() => {
-    setErrorMessage(error);
-    if (status === 'succeeded') {
-      window.location.href = '/my_appointments';
-    }
-  }, [error, status]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -177,13 +169,6 @@ const Appointment = () => {
               <Button className="ml-2" variant="primary" type="submit">
                 Add Appointment
               </Button>
-              {errorMessage && (
-              <div>
-                Error:
-                {' '}
-                {errorMessage}
-              </div>
-              )}
             </Form>
           </Col>
         </Row>
