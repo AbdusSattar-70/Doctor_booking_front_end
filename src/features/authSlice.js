@@ -5,6 +5,7 @@ const initialState = {
   isAuthenticated: false,
   authToken: sessionStorage.getItem('authToken') || null,
   userName: sessionStorage.getItem('userName') || null,
+  userID: sessionStorage.getItem('userID') || null,
   userRole: sessionStorage.getItem('userRole') || null,
   error: null,
 };
@@ -32,7 +33,7 @@ export const signUp = createAsyncThunk('auth/signUp', async (userData) => {
 
     return response.data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error);
   }
 });
 
@@ -44,10 +45,12 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.authToken = action.payload.authToken;
       state.userName = action.payload.userName;
+      state.userID = action.payload.userID;
       state.userRole = action.payload.userRole;
       state.error = null;
       sessionStorage.setItem('authToken', action.payload.authToken);
       sessionStorage.setItem('userName', action.payload.userName);
+      sessionStorage.setItem('userID', action.payload.userID);
       sessionStorage.setItem('userRole', action.payload.userRole);
     },
     signInError(state, action) {
@@ -59,10 +62,12 @@ const authSlice = createSlice({
       state.isAuthenticated = false;
       state.authToken = null;
       state.userName = null;
+      state.userID = null;
       state.userRole = null;
       state.error = null;
       sessionStorage.removeItem('authToken');
       sessionStorage.removeItem('userName');
+      sessionStorage.removeItem('userID');
       sessionStorage.removeItem('userRole');
     },
   },
@@ -83,24 +88,31 @@ const authSlice = createSlice({
 
 export const { signInSuccess, signInError, signOut } = authSlice.actions;
 
-export const signIn = (email, password) => async (dispatch) => {
+export const signIn = (name, email, password) => async (dispatch) => {
   try {
     const response = await axios.post('http://localhost:3000/users/sign_in', {
       user: {
+        name,
         email,
         password,
       },
     });
+
     const authToken = response.headers.authorization;
-    const userName = response.data.status.data.name;
-    const userRole = response.data.status.data.role;
+    const userName = response.data.data.name;
+    const userID = response.data.data.id;
+    const userRole = response.data.data.role;
 
     sessionStorage.setItem('authToken', authToken);
     sessionStorage.setItem('userName', userName);
+    sessionStorage.setItem('userID', userID);
     sessionStorage.setItem('userRole', userRole);
-    dispatch(signInSuccess({ authToken, userRole, userName }));
+    dispatch(signInSuccess({
+      authToken, userRole, userName, userID,
+    }));
   } catch (error) {
-    dispatch(signInError(error.message));
+    const { message } = error.response.data;
+    dispatch(signInError(message));
   }
 };
 

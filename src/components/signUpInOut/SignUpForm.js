@@ -1,4 +1,3 @@
-/* eslint-disable react/require-default-props */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
@@ -54,8 +53,8 @@ const SignUpForm = ({ showSignUpModal, handleCloseSignUpModal, handleOpenSignUpM
     e.preventDefault();
     dispatch(signUp(formData))
       .then(() => {
-        const { email, password } = formData;
-        dispatch(signIn(email, password));
+        const { name, email, password } = formData;
+        dispatch(signIn(name, email, password));
       })
       .catch((error) => {
         throw error;
@@ -147,6 +146,7 @@ const SignUpForm = ({ showSignUpModal, handleCloseSignUpModal, handleOpenSignUpM
 };
 
 SignUpForm.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   showSignUpModal: PropTypes.bool,
   handleCloseSignUpModal: PropTypes.func.isRequired,
   handleOpenSignUpModal: PropTypes.func.isRequired,

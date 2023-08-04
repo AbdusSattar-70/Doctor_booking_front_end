@@ -47,7 +47,7 @@ function NavBar() {
           >
             Add Doctor
           </Button>
-          {isAdmin() ? (
+          {isAdmin() || isSuperAdmin() ? (
             <NavLink to="/delete_doctor" activeClassName="active" isActive={() => isActiveLink('/delete_doctor')}>
               Delete Doctor
             </NavLink>
