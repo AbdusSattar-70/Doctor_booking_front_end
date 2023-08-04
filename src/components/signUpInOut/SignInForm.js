@@ -10,9 +10,9 @@ function SignInForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
-    const email = e.target.email.value;
-    const password = e.target.password.value;
+    const name = e.target.name.value.trim();
+    const email = e.target.email.value.trim();
+    const password = e.target.password.value.trim();
 
     const response = await dispatch(signIn(name, email, password));
 
