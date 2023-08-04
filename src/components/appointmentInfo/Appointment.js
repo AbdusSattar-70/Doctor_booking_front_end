@@ -7,6 +7,21 @@ import NavBar from '../navbar/Navbar';
 import { addAppointment } from '../../features/appointmentSlice';
 import { fetchDoctors } from '../../features/doctorSlice';
 
+function formatDateAndTime(dateTimeString) {
+  const date = new Date(dateTimeString);
+  const formattedDate = date.toLocaleDateString(undefined, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const formattedTime = date.toLocaleTimeString(undefined, {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
+
+  return `${formattedDate}, ${formattedTime}`;
+}
+
 const Appointment = () => {
   const dispatch = useDispatch();
   const { userName, userID } = useSelector((state) => state.auth);
@@ -98,13 +113,14 @@ const Appointment = () => {
                       {' '}
                       {doctor.specialization}
                       {' '}
-                      | Available from:
+                      <p>Availability:</p>
                       {' '}
-                      {doctor.available_from}
+                      {'From: '}
+                      {formatDateAndTime(doctor.available_from)}
                       {' '}
-                      to
-                      {' '}
-                      {doctor.available_to}
+
+                      {'To: '}
+                      {formatDateAndTime(doctor.available_to)}
                     </option>
                   ))}
                 </Form.Control>
@@ -118,51 +134,58 @@ const Appointment = () => {
                   value={formData.appointment_date}
                   onChange={handleChange}
                   required
-                  placeholder="Select the appointment date and time"
                 />
               </Form.Group>
 
               <Form.Group controlId="location.street">
-                <Form.Label>Street</Form.Label>
+                <Form.Label />
                 <Form.Control
                   type="text"
                   name="location.street"
                   value={formData.location.street}
                   onChange={handleChange}
                   required
+                  placeholder="Enter the Street Name here"
+
                 />
               </Form.Group>
 
               <Form.Group controlId="location.state">
-                <Form.Label>State</Form.Label>
+                <Form.Label />
                 <Form.Control
                   type="text"
                   name="location.state"
                   value={formData.location.state}
                   onChange={handleChange}
                   required
+                  placeholder="Enter the State Name here"
+
                 />
               </Form.Group>
 
               <Form.Group controlId="location.city">
-                <Form.Label>City</Form.Label>
+                <Form.Label />
                 <Form.Control
                   type="text"
                   name="location.city"
                   value={formData.location.city}
                   onChange={handleChange}
                   required
+                  placeholder="Enter the City Name here"
+
                 />
               </Form.Group>
 
               <Form.Group controlId="location.zipCode">
-                <Form.Label>ZIP Code</Form.Label>
+                <Form.Label />
                 <Form.Control
                   type="text"
                   name="location.zip_code"
                   value={formData.location.zip_code}
                   onChange={handleChange}
                   required
+                  placeholder="Enter ZIP Code here"
+
                 />
               </Form.Group>
 
