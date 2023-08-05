@@ -28,9 +28,9 @@ function DoctorList() {
     );
   }
 
-  if (!doctors || doctors.length === 0) {
-    return <div>No doctors found.</div>;
-  }
+  // if (!doctors || doctors.length === 0) {
+  //   return <div>No doctors found.</div>;
+  // }
 
   const groupSize = 3;
   const totalGroups = Math.ceil(doctors.length / groupSize);
@@ -64,13 +64,15 @@ function DoctorList() {
               {doctors
                 .slice(currentGroupIndex * groupSize, (currentGroupIndex + 1) * groupSize)
                 .map((doctor) => (
-                  <div key={doctor.id}>
-                    <img src={doctor.photo} alt={doctor.name} className="doctor-photo rounded-circle" />
-                    <div>
-                      <h5>{doctor.name}</h5>
-                      <p>{doctor.specialization}</p>
+                  <a key={doctor.id} href="/doctor_details">
+                    <div key={doctor.id}>
+                      <img src={doctor.photo} alt={doctor.name} className="doctor-photo rounded-circle" />
+                      <div>
+                        <h5>{doctor.name}</h5>
+                        <p>{doctor.specialization}</p>
+                      </div>
                     </div>
-                  </div>
+                  </a>
                 ))}
             </div>
             <button

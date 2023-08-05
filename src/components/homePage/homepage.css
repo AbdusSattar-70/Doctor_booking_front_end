@@ -1,0 +1,18 @@
+/* Add the URL of your background image here */
+.backgroundImg {
+  background-image: url('../../assets/bg2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: color-burn;
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.boxshadow {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 550px;
+  width: 100%;
+}

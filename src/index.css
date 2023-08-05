@@ -1,8 +1,7 @@
-.doctor-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
 }
 
 .custom_nav a {
