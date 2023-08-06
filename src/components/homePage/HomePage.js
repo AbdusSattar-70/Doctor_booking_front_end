@@ -60,7 +60,7 @@ function HomePage() {
     <div className="container-fluid backgroundImg">
       <div className="row">
         <div className="col-12 text-center mt-4">
-          <h1>Welcome Back!</h1>
+          <h1 className="animate-jump">Welcome Back!</h1>
         </div>
       </div>
       <div className="row">
@@ -82,7 +82,7 @@ function HomePage() {
                 </Button>
                 <p>{getErrorMessage()}</p>
               </Form>
-              <p className="mb-2">Need to Create a new Account?</p>
+              <p className="text-center">No Account?</p>
               <Button variant="primary" onClick={handleOpenSignUpModal} className="mb-2 w-100">
                 Sign up
               </Button>

@@ -1,17 +1,8 @@
+/* Import Montserrat font from Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
 
 * {
   font-family: 'Montserrat', sans-serif;
-}
-
-.custom_nav a {
-  text-decoration: none;
-  color: black;
-}
-
-.active {
-  background-color: dodgerblue;
-  color: white !important;
 }
 
 .carousel-content {
@@ -20,7 +11,8 @@
   transition: transform 0.3s ease-in-out;
   width: -moz-fit-content;
   width: fit-content;
-  margin: 0 auto;
+  align-items: center;
+  /* margin: 0 auto; */
 }
 
 .carousel-btn {
@@ -65,4 +57,9 @@
 .add_doctor_btn:hover,
 .add_doctor_btn:disabled {
   background-color: #fff !important;
+}
+
+.scrollable {
+  max-height: 95vh;
+  overflow: auto;
 }

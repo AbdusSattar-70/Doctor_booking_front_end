@@ -77,13 +77,12 @@ const Appointment = () => {
 
   return (
     <>
-      <Container>
+      <Container fluid>
         <Row>
-          <Col md={2} className="mb-4">
+          <Col md={2} className="p-0 min-vh-100">
             <NavBar />
-
           </Col>
-          <Col md={10}>
+          <Col md={10} className="pt-4 min-vh-100" style={{ background: '#f7f7f7' }}>
             <Form onSubmit={handleSubmit}>
               <Form.Group controlId="patientName">
                 <Form.Label>Patient Name</Form.Label>
@@ -118,7 +117,6 @@ const Appointment = () => {
                       {'From: '}
                       {formatDateAndTime(doctor.available_from)}
                       {' '}
-
                       {'To: '}
                       {formatDateAndTime(doctor.available_to)}
                     </option>
@@ -138,7 +136,7 @@ const Appointment = () => {
               </Form.Group>
 
               <Form.Group controlId="location.street">
-                <Form.Label />
+                <Form.Label>Street</Form.Label>
                 <Form.Control
                   type="text"
                   name="location.street"
@@ -146,12 +144,11 @@ const Appointment = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter the Street Name here"
-
                 />
               </Form.Group>
 
               <Form.Group controlId="location.state">
-                <Form.Label />
+                <Form.Label>State</Form.Label>
                 <Form.Control
                   type="text"
                   name="location.state"
@@ -159,12 +156,11 @@ const Appointment = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter the State Name here"
-
                 />
               </Form.Group>
 
               <Form.Group controlId="location.city">
-                <Form.Label />
+                <Form.Label>City</Form.Label>
                 <Form.Control
                   type="text"
                   name="location.city"
@@ -172,12 +168,11 @@ const Appointment = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter the City Name here"
-
                 />
               </Form.Group>
 
               <Form.Group controlId="location.zipCode">
-                <Form.Label />
+                <Form.Label>ZIP Code</Form.Label>
                 <Form.Control
                   type="text"
                   name="location.zip_code"
@@ -185,7 +180,6 @@ const Appointment = () => {
                   onChange={handleChange}
                   required
                   placeholder="Enter ZIP Code here"
-
                 />
               </Form.Group>
 
