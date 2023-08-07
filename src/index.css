@@ -1,27 +1,20 @@
-.doctor-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  object-fit: cover;
+/* Import Montserrat font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+  overflow: hidden;
 }
 
-.custom_nav a {
-  text-decoration: none;
-  color: black;
-}
-
-.active {
-  background-color: dodgerblue;
-  color: white !important;
-}
 
 .carousel-content {
+  width: 100% !important;
   height: 100vh;
   display: flex;
   transition: transform 0.3s ease-in-out;
   width: -moz-fit-content;
   width: fit-content;
-  margin: 0 auto;
+  align-items: center;
 }
 
 .carousel-btn {
@@ -37,10 +30,21 @@
 
 .carousel-btn.prev {
   left: 0;
+  border: none;
+    outline: none;
+    background-color: #97bd28;
+    color: white;
+    padding: 20px;
 }
 
 .carousel-btn.next {
   right: 0;
+      border: none;
+      outline: none;
+      background-color: #97bd28;
+      color: white;
+      padding: 20px;
+
 }
 
 .carousel-container {
@@ -66,4 +70,9 @@
 .add_doctor_btn:hover,
 .add_doctor_btn:disabled {
   background-color: #fff !important;
+}
+
+.scrollable {
+  max-height: 95vh;
+  overflow: auto;
 }

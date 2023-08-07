@@ -1,17 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const BASE_URL = 'http://localhost:3000/users';
+
 const initialState = {
   status: 'idle',
   error: null,
   doctors: [], // To store the fetched doctor data
-  authToken: sessionStorage.getItem('authToken') || null, // To store the authentication token from session storage
+  doctorDetails: null,
+  authToken: sessionStorage.getItem('authToken') || null,
 };
 
 // Async Thunk for adding a doctor
 export const addDoctor = createAsyncThunk('doctors/addDoctor', async (doctorData) => {
   try {
-    const response = await axios.post('http://localhost:3000/users', {
+    const response = await axios.post(BASE_URL, {
       user: {
         name: doctorData.name,
         age: doctorData.age,
@@ -56,6 +59,19 @@ export const fetchDoctors = createAsyncThunk('doctors/fetchDoctors', async () =>
   }
 });
 
+// Async Thunk for fetching DoctorDetails
+export const fetchDoctorDetails = createAsyncThunk(
+  'doctors/fetchDoctorDetails',
+  async (id) => {
+    try {
+      const response = await axios.get(`${BASE_URL}/doctors/${id}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.message);
+    }
+  },
+);
+
 const doctorsSlice = createSlice({
   name: 'doctors',
   initialState,
@@ -63,7 +79,6 @@ const doctorsSlice = createSlice({
     setAuthToken(state, action) {
       state.authToken = action.payload;
     },
-    // Other synchronous reducers here if needed
   },
   extraReducers: (builder) => {
     builder
@@ -84,9 +99,21 @@ const doctorsSlice = createSlice({
       })
       .addCase(fetchDoctors.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.doctors = action.payload; // Update the doctors array with fetched data
+        state.doctors = action.payload;
       })
       .addCase(fetchDoctors.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+      .addCase(fetchDoctorDetails.pending, (state) => {
+        state.status = 'loading';
+        state.error = null;
+      })
+      .addCase(fetchDoctorDetails.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.doctorDetails = action.payload;
+      })
+      .addCase(fetchDoctorDetails.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
       });

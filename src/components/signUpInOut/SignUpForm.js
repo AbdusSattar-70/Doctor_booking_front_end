@@ -5,7 +5,7 @@ import {
   Form, Button, Row, Col, Modal,
 } from 'react-bootstrap';
 import { FaXmark } from 'react-icons/fa6';
-import { signUp, signIn } from '../../features/authSlice';
+import { signUp } from '../../features/authSlice';
 
 const initialAddressData = {
   street: '',
@@ -51,14 +51,8 @@ const SignUpForm = ({ showSignUpModal, handleCloseSignUpModal, handleOpenSignUpM
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(signUp(formData))
-      .then(() => {
-        const { name, email, password } = formData;
-        dispatch(signIn(name, email, password));
-      })
-      .catch((error) => {
-        throw error;
-      });
+    dispatch(signUp(formData));
+    window.location.href = '/';
   };
 
   return (
