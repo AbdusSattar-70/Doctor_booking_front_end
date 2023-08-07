@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { FaCaretLeft, FaCaretRight } from 'react-icons/fa6';
 import { fetchDoctors } from '../../features/doctorSlice';
 import NavBar from '../navbar/Navbar';
 
@@ -62,6 +64,10 @@ function DoctorList() {
         </div>
 
         <div className="col-lg-10 col-md-10 col-12 p-0">
+          <div className="text-center mt-4">
+            <h1>Meet Our Team</h1>
+            <h3>Schedule An Appointment Now</h3>
+          </div>
           <div className="carousel-container">
             <button
               type="button"
@@ -69,13 +75,13 @@ function DoctorList() {
               onClick={handlePrevGroup}
               disabled={currentGroupIndex === 0}
             >
-              Prev
+              <FaCaretLeft />
             </button>
             <div className="carousel-content row">
               {doctors
                 .slice(currentGroupIndex * groupSize, (currentGroupIndex + 1) * groupSize)
                 .map((doctor) => (
-                  <a key={doctor.id} href="/doctor_details" className="col-12 col-md-4">
+                  <Link key={doctor.id} to={`/doctor_details/${doctor.id}`} className="col-12 col-md-4">
                     <div key={doctor.id} className="carousel-item">
                       <img src={doctor.photo} alt={doctor.name} className="doctor-photo rounded-circle" />
                       <div>
@@ -83,7 +89,7 @@ function DoctorList() {
                         <p>{doctor.specialization}</p>
                       </div>
                     </div>
-                  </a>
+                  </Link>
                 ))}
             </div>
             <button
@@ -92,7 +98,7 @@ function DoctorList() {
               onClick={handleNextGroup}
               disabled={currentGroupIndex === totalGroups - 1}
             >
-              Next
+              <FaCaretRight />
             </button>
           </div>
         </div>
