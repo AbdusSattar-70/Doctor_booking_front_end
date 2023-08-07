@@ -6,8 +6,8 @@ const BASE_URL = 'http://localhost:3000/users';
 const initialState = {
   status: 'idle',
   error: null,
-  doctors: [], // To store the fetched doctor data
-  doctorDetails: null,
+  references: null,
+  doctors: [],
   authToken: sessionStorage.getItem('authToken') || null,
 };
 
@@ -59,15 +59,19 @@ export const fetchDoctors = createAsyncThunk('doctors/fetchDoctors', async () =>
   }
 });
 
-// Async Thunk for fetching DoctorDetails
-export const fetchDoctorDetails = createAsyncThunk(
-  'doctors/fetchDoctorDetails',
-  async (id) => {
+export const deleteDoctor = createAsyncThunk(
+  'appointments/deleteDoctor',
+  async (doctorId, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${BASE_URL}/doctors/${id}`);
-      return response.data;
+      await axios.delete(`http://localhost:3000/users/${doctorId}`, {
+        headers: {
+          Authorization: sessionStorage.getItem('authToken'),
+        },
+      });
+      return doctorId;
     } catch (error) {
-      throw new Error(error.message);
+      const { message, references } = error.response.data;
+      return rejectWithValue({ message, references });
     }
   },
 );
@@ -105,17 +109,21 @@ const doctorsSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message;
       })
-      .addCase(fetchDoctorDetails.pending, (state) => {
+      .addCase(deleteDoctor.pending, (state) => {
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(fetchDoctorDetails.fulfilled, (state, action) => {
+      .addCase(deleteDoctor.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.doctorDetails = action.payload;
+        state.doctors = state.doctors.filter(
+          (doctor) => doctor.id !== action.payload,
+        );
       })
-      .addCase(fetchDoctorDetails.rejected, (state, action) => {
+      .addCase(deleteDoctor.rejected, (state, action) => {
+        const { message, references } = action.payload;
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = message;
+        state.references = references;
       });
   },
 });

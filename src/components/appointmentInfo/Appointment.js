@@ -7,21 +7,7 @@ import NavBar from '../navbar/Navbar';
 import { addAppointment } from '../../features/appointmentSlice';
 import { fetchDoctors } from '../../features/doctorSlice';
 import './appointment.css';
-
-function formatDateAndTime(dateTimeString) {
-  const date = new Date(dateTimeString);
-  const formattedDate = date.toLocaleDateString(undefined, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  });
-  const formattedTime = date.toLocaleTimeString(undefined, {
-    hour: 'numeric',
-    minute: '2-digit',
-  });
-
-  return `${formattedDate}, ${formattedTime}`;
-}
+import { formatDateAndTime } from './MyAppointments';
 
 const Appointment = () => {
   const dispatch = useDispatch();

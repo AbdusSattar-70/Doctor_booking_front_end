@@ -6,11 +6,13 @@ import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import NavBar from '../navbar/Navbar';
 import './doctor.css';
+import { formatDateAndTime } from '../appointmentInfo/MyAppointments';
 
 const DoctorDetails = () => {
   const API_BASE_URL = 'http://localhost:3000/users';
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
+  const [appointments, setAppointment] = useState([]);
   const [nextDoctorId, setNextDoctorId] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -21,7 +23,8 @@ const DoctorDetails = () => {
       axios.get(`${API_BASE_URL}?role=doctor`),
     ])
       .then(([doctorResponse, doctorsResponse]) => {
-        setDoctor(doctorResponse.data);
+        setDoctor(doctorResponse.data.user);
+        setAppointment(doctorResponse.data.appointments);
         const doctors = doctorsResponse.data;
         setNextDoctorId(doctors);
         setLoading(false);
@@ -31,7 +34,6 @@ const DoctorDetails = () => {
         setLoading(false);
       });
   }, [id]);
-
   if (loading) {
     return (
       <div style={{ width: 200, height: 200 }}>
@@ -95,7 +97,15 @@ const DoctorDetails = () => {
               </tr>
               <tr>
                 <td>Experiences:</td>
-                <td>{doctor.experiences}</td>
+                <td>
+                  {doctor.experiences}
+                  {' '}
+                  <span>Years</span>
+                </td>
+              </tr>
+              <tr>
+                <td>Active Appointments:</td>
+                <td>{appointments.length}</td>
               </tr>
               <tr>
                 <td>Consultation Fee:</td>
@@ -106,11 +116,11 @@ const DoctorDetails = () => {
               </tr>
               <tr>
                 <td>Available From:</td>
-                <td>{doctor.available_from}</td>
+                <td>{formatDateAndTime(doctor.available_from)}</td>
               </tr>
               <tr>
                 <td>Available To:</td>
-                <td>{doctor.available_to}</td>
+                <td>{formatDateAndTime(doctor.available_to)}</td>
               </tr>
               <tr>
                 <td>Rating:</td>
@@ -125,7 +135,7 @@ const DoctorDetails = () => {
               </tr>
             </tbody>
           </table>
-          <button type="button" className="appointBtn">
+          <button type="button" className="appointBtn rounded-end-pill rounded-start-pill">
             <Link to={`/appointment/${doctor.id}`}>Make an Appointment</Link>
           </button>
         </div>

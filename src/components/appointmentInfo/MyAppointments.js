@@ -11,7 +11,7 @@ function formatLocation(location) {
   return `${location.street}, ${location.state}, ${location.city}, ${location.zip_code}`;
 }
 
-function formatDateAndTime(dateTimeString) {
+export function formatDateAndTime(dateTimeString) {
   const date = new Date(dateTimeString);
   const formattedDate = date.toLocaleDateString(undefined, {
     year: 'numeric',
@@ -29,7 +29,7 @@ function formatDateAndTime(dateTimeString) {
 function MyAppointments() {
   const dispatch = useDispatch();
   const {
-    status, error, appointments, patients, doctors,
+    status, error, appointments, doctors,
   } = useSelector((state) => state.appointments);
 
   useEffect(() => {
@@ -106,7 +106,6 @@ function MyAppointments() {
                 <thead>
                   <tr>
                     <th>Appointment Date</th>
-                    <th>Patient Name</th>
                     <th>Doctor Name</th>
                     <th>Location</th>
                     <th>Status</th>
@@ -115,12 +114,10 @@ function MyAppointments() {
                 </thead>
                 <tbody>
                   {appointments.map((appointment) => {
-                    const patient = patients.find((p) => p.id === appointment.patient_id);
                     const doctor = doctors.find((d) => d.id === appointment.doctor_id);
                     return (
                       <tr key={appointment.id}>
                         <td>{formatDateAndTime(appointment.appointment_date)}</td>
-                        <td>{patient ? patient.name : 'Unknown'}</td>
                         <td>{doctor ? doctor.name : 'Unknown'}</td>
                         <td>{formatLocation(appointment.location)}</td>
                         <td>Active</td>
