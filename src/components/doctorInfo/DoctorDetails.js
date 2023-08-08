@@ -9,7 +9,7 @@ import './doctor.css';
 import { formatDateAndTime } from '../appointmentInfo/MyAppointments';
 
 const DoctorDetails = () => {
-  const API_BASE_URL = 'http://localhost:3000/users';
+  const API_BASE_URL = 'https://booking-doctor-api-v1.onrender.com/users';
   const { id } = useParams();
   const [doctor, setDoctor] = useState(null);
   const [appointments, setAppointment] = useState([]);
