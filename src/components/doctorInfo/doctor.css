@@ -27,16 +27,17 @@
 
 .appointBtn {
   width: 75%;
-    left: 0;
-    border: none;
-    outline: none;
-    background-color: #97bd28;
-    color: white;
-    padding: 15px;
+  left: 0;
+  border: none;
+  outline: none;
+  background-color: #97bd28;
+  color: white;
+  padding: 15px;
 }
+
 .appointBtn a {
-    background-color: #97bd28;
-    color: white !important;
+  background-color: #97bd28;
+  color: white !important;
 }
 
 .img-fluid {

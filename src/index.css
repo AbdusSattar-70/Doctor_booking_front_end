@@ -6,14 +6,11 @@
   overflow-x: hidden;
 }
 
-
 .carousel-content {
   width: 100% !important;
   height: 100vh;
   display: flex;
   transition: transform 0.3s ease-in-out;
-  width: -moz-fit-content;
-  width: fit-content;
   align-items: center;
 }
 
@@ -31,20 +28,19 @@
 .carousel-btn.prev {
   left: 0;
   border: none;
-    outline: none;
-    background-color: #97bd28;
-    color: white;
-    padding: 20px;
+  outline: none;
+  background-color: #97bd28;
+  color: white;
+  padding: 20px;
 }
 
 .carousel-btn.next {
   right: 0;
-      border: none;
-      outline: none;
-      background-color: #97bd28;
-      color: white;
-      padding: 20px;
-
+  border: none;
+  outline: none;
+  background-color: #97bd28;
+  color: white;
+  padding: 20px;
 }
 
 .carousel-container {
