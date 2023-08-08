@@ -173,7 +173,7 @@ const AddDoctor = ({ showSignUpModal, handleCloseSignUpModal, handleOpenSignUpMo
             </Form.Group>
           </Row>
 
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onClick={handleCloseSignUpModal}>
             Add Doctor
           </Button>
         </Form>
